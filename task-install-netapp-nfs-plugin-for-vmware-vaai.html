@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head class="at-element-marker">
+  <title>VMware VAAI용 NetApp NFS 플러그인을 설치합니다</title>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge,chrome=1">
+  <meta http-equiv="language" content="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="VMware VAAI용 NetApp NFS 플러그인을 설치합니다" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://docs.netapp.com/ko-kr/nfs-plugin-vmware-vaai/task-install-netapp-nfs-plugin-for-vmware-vaai.html" />
+	<meta property="og:description" content="NFS 플러그인을 설치하려면 NetApp 스토리지 시스템에서 VMware vStorage for NFS를 설정하고, VMware 호스트에서 VAAI(VMware vStorage APIs for Array Integration)가 활성화되어 있는지 확인하고, VMware ESXi 호..." />
+  <meta property="og:image" content="https://docs.netapp.com/ko-kr/nfs-plugin-vmware-vaai/images/logo-tophat-social.png" />
+  <meta property="og:image:alt" content="NetApp Logo" />
+  <meta name="format-detection" content="telephone=no">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="encoding" content="utf-8">
+  <meta http-equiv="nss-type" content="Product Documentation"/>
+  <meta http-equiv="nss-subtype" content="User Guide"/><meta name="description" content="NFS 플러그인을 설치하려면 NetApp 스토리지 시스템에서 VMware vStorage for NFS를 설정하고, VMware 호스트에서 VAAI(VMware vStorage APIs for Array Integration)가 활성화되어 있는지 확인하고, VMware ESXi 호...">
+  <meta name="keywords" content=" install, netapp, nfs, plug-in, vmware, vaai, involve, enable, netapp, vstorage, api, array, integration, installation, download, nfsv4.1"><!-- Icons -->
+  <link rel="icon" href="/ko-kr/nfs-plugin-vmware-vaai/images/favicon.ico" type="image/x-icon">
+
+  <!-- RSS Feed --><!-- CSS Definitions: NetApp CSS should be defined after generic css -->
+
+  <!-- Elastic Search -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/searchkit/0.10.0/theme.css">
+
+  <!-- Controls AsciiDoctor Admonition Blocks -->
+  <link rel="stylesheet" type="text/css" href="/ko-kr/nfs-plugin-vmware-vaai/css/font-awesome.min.css">
+
+  <!-- Controls the shadow effect for search dropdown menu -->
+  <link rel="stylesheet" href="/ko-kr/nfs-plugin-vmware-vaai/css/boxshadowproperties.css">
+
+  <!-- NetApp CSS controls the technical content -->
+  <link rel="stylesheet" type="text/css" href="/ko-kr/nfs-plugin-vmware-vaai/css/netapp.css">
+
+  <!-- WWW CSS Content -->
+  <link rel="stylesheet" type="text/css" href="/ko-kr/nfs-plugin-vmware-vaai/css/www-luci-dotcom.min.css">
+  <link rel="stylesheet" type="text/css" href="/ko-kr/nfs-plugin-vmware-vaai/css/www-netapp-dotcom.css">
+  <link rel="stylesheet" href="/ko-kr/nfs-plugin-vmware-vaai/css/www-netapp-library-critical.min.css" media="all" >
+  <link rel="stylesheet" href="/ko-kr/nfs-plugin-vmware-vaai/css/www-netapp-library-non-critical.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="stylesheet" href="/ko-kr/nfs-plugin-vmware-vaai/css/www-netapp-library-global-header-footer.min.css">
+
+  <!-- NetApp IE Customizations -->
+  <link rel="stylesheet" href='/ko-kr/nfs-plugin-vmware-vaai/css/na-utility.css' type='text/css'>
+  <link rel="stylesheet" href='/ko-kr/nfs-plugin-vmware-vaai/css/na-sidebar.css' type='text/css'>
+  <link rel='stylesheet' href='/ko-kr/nfs-plugin-vmware-vaai/css/clouddocs.css' type='text/css'>
+  <link rel='stylesheet' href='/ko-kr/nfs-plugin-vmware-vaai/css/na-pagenav.css' type='text/css'>
+
+  
+  <link rel="stylesheet" href="/ko-kr/nfs-plugin-vmware-vaai/css/landing-page.css" type="text/css">
+  <link rel="stylesheet" href="/ko-kr/nfs-plugin-vmware-vaai/css/tabbed-blocks.css" type="text/css">
+  <link rel='stylesheet' href='/ko-kr/nfs-plugin-vmware-vaai/css/na-feature.css' type='text/css'><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+  <!-- Used for Product Family Page Sidebar Visibility --><!-- Used to import Promise for IE. Required for SearchKit -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.5/bluebird.min.js"></script><script src='/ko-kr/nfs-plugin-vmware-vaai/js/na-search.js'></script><script src='/ko-kr/nfs-plugin-vmware-vaai/js/na-pagenav.js'></script><link rel='stylesheet' href='/ko-kr/nfs-plugin-vmware-vaai/css/prism.css' type='text/css'>
+  <link rel='stylesheet' href='/ko-kr/nfs-plugin-vmware-vaai/css/prism-netapp.css' type='text/css'>
+
+
+  <script src='/ko-kr/nfs-plugin-vmware-vaai/js/na-utility.js'></script>
+  <script src='/ko-kr/nfs-plugin-vmware-vaai/js/clouddocs.js'></script>
+  <script>
+  if (document.location.hostname === "docs.netapp.com") {
+    var head = document.getElementsByTagName('head')[0];
+    var adobe = document.createElement("script");
+    adobe.type = "text/javascript";
+    adobe.src = "//assets.adobedtm.com/60287eadf1ee/c284da483c83/launch-e9ff3acac59f.min.js";
+    head.appendChild(adobe);
+  }
+  </script>
+  <script src='/ko-kr/nfs-plugin-vmware-vaai/js/jquery.navgoco.min.js'></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src='/ko-kr/nfs-plugin-vmware-vaai/js/toc.js'></script>
+  <script src='/ko-kr/nfs-plugin-vmware-vaai/js/customscripts.js'></script><script>
+      $(document).ready(function() {
+          
+          var collapseOnInit = true;
+          
+
+          var navSettings = {
+              "caretHtml": '',
+              "accordion": collapseOnInit,
+              "openClass": 'active', // open
+              "save": false, // leave false or nav highlighting doesn't work right
+              "cookie": {
+                  "name": 'navgoco',
+                  "expires": false,
+                  "path": '/'
+              },
+              "slide": {
+                  "duration": 400,
+                  "easing": 'swing'
+              }
+          };
+
+          // Initialize navgoco with default options
+          $("#mysidebar").navgoco(navSettings);
+          
+
+          $("#collapseAll").click(function(e) {
+              e.preventDefault();
+              $("#mysidebar").navgoco('toggle', false);
+          });
+
+          $("#expandAll").click(function(e) {
+              e.preventDefault();
+              $("#mysidebar").navgoco('toggle', true);
+          });
+
+      });
+
+  </script>
+  <script>
+      $(document).ready(function() {
+          $("#tg-sb-link").click(function() {
+              $("#tg-sb-sidebar").toggle();
+              $("#tg-sb-content").toggleClass('col-md-9');
+              $("#tg-sb-content").toggleClass('col-md-12');
+              $("#tg-sb-icon").toggleClass('fa-toggle-on');
+              $("#tg-sb-icon").toggleClass('fa-toggle-off');
+          });
+      });
+  </script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-81697994-3"></script>
+  <script>
+  if (document.location.hostname === "docs.netapp.com") {
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-81697994-3');
+  }
+  </script>
+  <script src='/ko-kr/nfs-plugin-vmware-vaai/js/version-dropdown.js'></script>
+  <script src='/ko-kr/nfs-plugin-vmware-vaai/js/FileSaver.min.js'></script>
+  <script src='/ko-kr/nfs-plugin-vmware-vaai/js/jszip-utils.min.js'></script>
+  <script src='/ko-kr/nfs-plugin-vmware-vaai/js/jszip.min.js'></script>
+  <script src='/ko-kr/nfs-plugin-vmware-vaai/js/pdf-ux.js'></script>
+</head>
+
+
+  <body class role="document">
+    <div id="page" class="n-off-canvas-menu">
+      <div class="n-off-canvas-menu__menu"><!--TODO: Add offcanvas code --></div>
+      <div class="n-off-canvas-menu__content-wrap">
+        <header class="site-header" id="banner">
+  
+  <!-- Start Page Toolbar -->
+  <div class="page-nav-toolbar">
+    <div id="version-dropdown"></div>
+    <div class="page-nav-contribute"  >
+      <a target="_blank" href="https://github.com/NetAppDocs/nfs-plugin-vmware-vaai/issues/new?body=Page%3A%20[VMware VAAI용 NetApp NFS 플러그인을 설치합니다](https://docs.netapp.com/ko-kr/nfs-plugin-vmware-vaai/task-install-netapp-nfs-plugin-for-vmware-vaai.html)" class="page-nav-contribute-link" role="button"><img src="/ko-kr/nfs-plugin-vmware-vaai/images/discuss-sm.svg" class="github-icon" />문서 변경 요청</a>
+      <a target="_blank" href="https://github.com/NetAppDocs/nfs-plugin-vmware-vaai/blob/main/task-install-netapp-nfs-plugin-for-vmware-vaai.adoc" class="page-nav-contribute-link" role="button"><img src="/ko-kr/nfs-plugin-vmware-vaai/images/edit-sm.svg" class="github-icon" />이 페이지 편집</a>
+      <a target="_blank" href="https://docs.netapp.com/us-en/contribute/" class="page-nav-contribute-link"  ><img src="/ko-kr/nfs-plugin-vmware-vaai/images/article-sm.svg" class="github-icon" />기여하는 방법 자세히 알아보기</a>
+    </div>
+    <div class="page-nav-container">
+      <nav class="page-nav-fixed">
+        <div class="page-nav-title">이 페이지의 내용</div>
+        <div class="page-nav-links">
+          <ul class="page-nav-inner" id="page-menu"></ul>
+        </div>
+      </nav>
+    </div>
+  </div>
+  
+  <!-- Start top_hat -->
+  <div class="n-top-hat">
+    <div class="n-container">
+      <div class="n-top-hat__cross-property-nav">
+        <ul class="n-top-hat__list">
+          <li class="n-top-hat__list-item">
+            <a href="https://www.netapp.com/products-a-z/" class="n-top-hat__link">제품 및 솔루션</a>
+          </li>
+          <li class="n-top-hat__list-item">
+            <a href="https://www.netapp.com/support-and-training/netapp-university/" class="n-top-hat__link">지원 및 교육</a>
+          </li>
+          <li class="n-top-hat__list-item">
+            <a href="https://cloud.netapp.com" class="n-top-hat__link">Cloud Central</a>
+          </li>
+          <li class="n-top-hat__list-item">
+            <a href="https://community.netapp.com/" class="n-top-hat__link">커뮤니티</a>
+          </li>
+          <li class="n-top-hat__list-item">
+            <a href="https://blog.netapp.com/" class="n-top-hat__link">블로그</a>
+          </li>
+          <li class="n-top-hat__list-item">
+            <a href="https://customers.netapp.com/en/" class="n-top-hat__link">고객 성공 사례</a>
+          </li>
+          <li class="n-top-hat__list-item">
+            <a href="https://www.netapp.com/us/contact-us/index.aspx" target="_self" class="n-top-hat__link" data-ntap-ui="contact-us">연락처</a>
+          </li>
+        </ul>
+      </div>
+      <div class="n-top-hat__utils">
+        <ul class="n-top-hat__list">
+          <li class="n-top-hat__list-item">
+            <a href="https://www.netapp.com/us/contact-us/index.aspx" target="_self" class="n-top-hat__link" data-ntap-ui="contact-us">연락처</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- End top_hat -->
+
+  <!-- Start property bar -->
+  <style>
+    .n-property-navigation-bar__menus--desktop-experience .n-menu--mega__default-content__heading span {
+    color: #34B0FF;
+    }
+  </style>
+  <div class="n-property-bar " data-ntap-ui="sticky-nav">
+    <div class="n-property-bar__inner-wrap">
+      <div class="n-property-bar__menu-toggle">
+        <a href="#" class="n-property-bar__menu-toggle-link">
+          <span class="n-property-bar__menu-toggle-text">Menu</span>
+          <svg class="n-icon-bars n-property-bar__menu-toggle-icon" aria-labelledby="title">
+            <title>bars</title>
+            <use xlink:href="/ko-kr/nfs-plugin-vmware-vaai/common/svg/sprite.svg#bars"></use>
+          </svg>
+        </a>
+      </div>
+      <div class="n-property-bar__property-mark ">
+        <a href="https://www.netapp.com" class="n-property-bar__property-link">
+          <div class="n-property-bar__logo">
+            <svg class="n-icon-netapp-mark n-icon-netapp-mark n-property-bar__netapp-mark-icon" aria-labelledby="title">
+              <title>netapp-mark</title>
+              <use xlink:href="/ko-kr/nfs-plugin-vmware-vaai/common/svg/sprite.svg#netapp-mark"></use>
+            </svg>
+            <svg class="n-icon-netapp-logo n-property-bar__logo-svg" aria-labelledby="title">
+              <title>netapp-logo</title>
+              <use xlink:href="/ko-kr/nfs-plugin-vmware-vaai/common/svg/sprite.svg#netapp-logo"></use>
+            </svg>
+          </div>
+        </a>
+      </div>
+
+      
+      <div class="search-property-bar">
+        <div id="search-demo-container" class="searchbox n-property-bar__search">
+          <div id="react-search" 
+          data-search-html="/ko-kr/nfs-plugin-vmware-vaai/search.html"
+          data-type="widget" 
+          data-placeholder="설명서 검색" 
+          data-no-results-found="{query}에 대한 결과를 찾을 수 없음" 
+          data-did-you-mean="{suggestion}을(를) 검색해보십시오." 
+          data-no-results-found-did-you-mean="{query}에 대한 결과를 찾을 수 없습니다. {suggestion}을(를) 검색하려 하셨습니까?" 
+          data-results-found="{hitCount}개의 결과를 찾음"  
+          data-sk-es-pf-indexes=""></div>
+          <button class="n-property-bar__search-toggle-button" type="button">
+            <svg class="n-icon-search n-property-bar__search-toggle-button-icon" aria-labelledby="title">
+              <title>search</title>
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/ko-kr/nfs-plugin-vmware-vaai/common/svg/sprite.svg#search"></use>
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <div class="n-property-bar__toolbar">
+    <!-- Start Language Selector --><div id="ie-i18n" class="n-property-bar__lang-selector">
+      <div id="ie-i18n-menu">
+      <span class="ie-i18n-lang">한국어</span>
+        <button class="ie-i18n-icon-container" type="button">
+          <svg class="n-globe__icon" aria-labelledby="title">
+            <title>globe</title>
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/ko-kr/nfs-plugin-vmware-vaai/common/svg/sprite.svg#globe"></use>
+          </svg>
+        </button>
+      </div>
+      <div id="n-property-navigation-bar__menu--language-selector" class="ie-i18n-results-container n-menu n-menu--v3 n-menu--is-active" style="display: none;">
+        <div class="n-language-selector-menu">
+          <ul class="n-menu__list">
+            <li class="n-menu__list-column">
+              <ul class="n-menu__list"><li class="n-menu__list-item n-menu__list-item--level-1">
+                  <a href="https://docs.netapp.com/ko-kr/nfs-plugin-vmware-vaai/task-install-netapp-nfs-plugin-for-vmware-vaai.html" class="n-menu__header-text"><span translate="no" class="notranslate">한국어</span></a>
+                </li><li class="n-menu__list-item n-menu__list-item--level-1">
+                  <a href="https://docs.netapp.com/us-en/nfs-plugin-vmware-vaai/task-install-netapp-nfs-plugin-for-vmware-vaai.html" class="n-menu__header-text"><span translate="no" class="notranslate">English</span></a>
+                </li><li class="n-menu__list-item n-menu__list-item--level-1">
+                  <a href="https://docs.netapp.com/ja-jp/nfs-plugin-vmware-vaai/task-install-netapp-nfs-plugin-for-vmware-vaai.html" class="n-menu__header-text"><span translate="no" class="notranslate">日本語</span></a>
+                </li><li class="n-menu__list-item n-menu__list-item--level-1">
+                  <a href="https://docs.netapp.com/zh-cn/nfs-plugin-vmware-vaai/task-install-netapp-nfs-plugin-for-vmware-vaai.html" class="n-menu__header-text"><span translate="no" class="notranslate">简体中文</span></a>
+                </li></ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div><!-- End Language Selector -->
+
+    <div class="n-property-bar__cta"></div>
+  </div>
+  <script>
+    $(function(){
+        var currentLocalization = $('html').attr('lang');
+
+        var localizationsDictionary = {
+            "en-CA" : "https://www.netapp.com/search/index.aspx?for_cr=canada&",
+            "en-IN" : "https://www.netapp.com/search/index.aspx?for_cr=india&",
+            "nl-NL" : "https://www.netapp.com/search/index.aspx?for_cr=netherlands&",
+            "ru-RU" : "https://www.netapp.com/search/index.aspx?for_cr=russia&",
+            "sv-SE" : "https://www.netapp.com/search/index.aspx?for_cr=sweden&",
+            "it-IT" : "https://www.netapp.com/search/index.aspx?for_cr=italy&",
+            "he-IL" : "https://www.netapp.com/search/index.aspx?for_cr=israel&",
+            "ko-KR" : "https://www.netapp.com/search/index.aspx?for_cr=korea&",
+            "zh-TW" : "https://www.netapp.com/search/index.aspx?for_cr=taiwan&",
+            "en-GB" : "https://www.netapp.com/search/index.aspx?for_cr=unitedkingdom&",
+            "en-SG" : "https://www.netapp.com/search/index.aspx?for_cr=asean&",
+            "en-AU" : "https://www.netapp.com/search/index.aspx?for_cr=australia&",
+            "pt-BR" : "https://www.netapp.com/search/index.aspx?for_cr=brasil&",
+            "de-CH" : "https://www.netapp.com/search/index.aspx?for_cr=switzerland&",
+            "es-MX" : "https://www.netapp.com/search/index.aspx?for_cr=mexico&"
+        };
+
+        if($('html').hasClass('ntap-whitelisted') && localizationsDictionary.hasOwnProperty(currentLocalization)) {
+            $('.n-property-bar__property-link').attr('href', '/');
+        }
+    });
+  </script>
+  <!-- End property bar -->
+</header>
+
+
+        <main id="n-main-content" class="n-main-content">
+          <!-- Start Documentation Content -->
+<div class="ie-main">
+  <!-- Sidebar Column -->
+  
+  <div class="col-md-3" id="sidebar-height">
+      <div class="n-pdf-header">
+  <a id="toggleButtonPdf" class="n-pdf-button" type="button">
+    <img src="/ko-kr/nfs-plugin-vmware-vaai/images/pdf.png" width="16" height="16"/>사용 가능한 PDF<span>
+    </span>
+  </a>
+</div>
+<div class="n-pdf-body-container">
+  <ul id="toggleContainerPdf" class="n-pdf-body" style="display:none;"><li class="pdf-ux-container">
+        <a target="_blank" href="/ko-kr/nfs-plugin-vmware-vaai/pdfs/fullsite-sidebar/VMware_VAAI용_NetApp_NFS_플러그인_설명서.pdf" >
+          <img src="/ko-kr/nfs-plugin-vmware-vaai/images/pdf.png" width="16" height="16"/>이 문서 사이트의 PDF</a>
+
+
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          <a target="_blank" 
+            
+              href="/ko-kr/nfs-plugin-vmware-vaai/pdfs/sidebar/설치_및_구성.pdf" 
+            
+          >
+            <img src="/ko-kr/nfs-plugin-vmware-vaai/images/pdf.png" width="16" height="16"/>
+            설치 및 구성
+          </a>
+          
+    <ul class="subfolders" style="display:none;"><li class="active pdf-hide">
+  <a target="_blank" href="/ko-kr/nfs-plugin-vmware-vaai/pdfs/pages/task-install-netapp-nfs-plugin-for-vmware-vaai.pdf" >
+    <img src="/ko-kr/nfs-plugin-vmware-vaai/images/pdf.png" width="16" height="16"/>
+    PDF of this page
+  </a>
+</li>
+
+</ul>
+  
+
+
+
+
+
+          
+        </li>
+      </ul>
+    
+
+  
+
+
+
+
+</li></ul>
+  <div class="zip-pdf-link-container" style="display: none;">   
+    <a href="#" id="zipPdf">
+      <img src="/ko-kr/nfs-plugin-vmware-vaai/images/pdf-zip.png" width="16" height="16"/>
+      <pre>별도의 PDF 문서 모음<span class="zip-size"></span></pre>
+    </a><div id="zip-link-popup" class="hide">
+    <div class="inner-modal">
+        <div class="downloading-progress">
+            <div class="spinner"></div>
+            <h1>Creating your file...</h1>
+            <div>This may take a few minutes. Thanks for your patience.</div>
+            <button class="cancel-download-btn" type="button">Cancel</button>
+        </div>
+        <div class="download-complete hide">
+            <div class="done-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"/></svg>
+            </div>
+            <div>Your file is ready</div>
+            <button class="cancel-download-btn" type="button">OK</button>
+        </div>
+    </div>
+</div>
+<script>
+    $(".cancel-download-btn").click(function(){
+        $("#zip-link-popup").addClass("hide");
+        $("#zip-link-popup .downloading-progress").removeClass("hide");
+        $("#zip-link-popup .download-complete").addClass("hide");
+    });
+</script></div>
+</div>
+<script>
+  $("#toggleContainerPdf li.active:last-child").parents('ul.subfolders').toggle('display');
+  $("#toggleButtonPdf").click(function () {
+    $("#toggleContainerPdf").toggle('display');
+    $(".n-pdf-body-container .zip-pdf-link-container").toggle('display');
+  });
+</script><div class="sidebar-nav-container">
+  <ul id="mysidebar" class="nav"><li class=" "><a class="na-navbar-padding" href="/ko-kr/nfs-plugin-vmware-vaai/index.html">
+        VMware VAAI용 NetApp NFS 플러그인 문서
+      </a></li><li class=" "><a class="na-navbar-padding" href="/ko-kr/nfs-plugin-vmware-vaai/releasenotes.html">
+        릴리즈 노트
+      </a></li><li class="subfolders "><a href="#">
+        <div class="na-navbar-padding"> 설치 및 구성</div>
+      </a>
+      <ul><li class="  active "><a class="na-navbar-padding" href="/ko-kr/nfs-plugin-vmware-vaai/task-install-netapp-nfs-plugin-for-vmware-vaai.html">
+        VMware VAAI용 NetApp NFS 플러그인을 설치합니다
+      </a></li><li class=" "><a class="na-navbar-padding" href="/ko-kr/nfs-plugin-vmware-vaai/task-configure-export-policies-for-clustered-data-ontap-to-allow-vaai-over-nfs.html">
+        NFS를 통한 VAAI를 허용하도록 ONTAP에 대한 엑스포트 정책을 구성합니다
+      </a></li></ul></li><li class=" "><a class="na-navbar-padding" href="/ko-kr/nfs-plugin-vmware-vaai/reference-legal-notices.html">
+        법적 고지
+      </a></li></ul>
+</div>
+<script>
+  window.onscroll = () => {
+    const value = -40 - (document.body.scrollHeight - (window.innerHeight + document.scrollingElement.scrollTop));
+    
+    document.getElementById("sidebar-height").style.bottom = Math.max(0,value) + "px";
+};
+</script>
+<!-- this highlights the active parent class in the navgoco sidebar. this is critical so that the parent expands when you're viewing a page. This must appear below the sidebar code above. Otherwise, if placed inside customscripts.js, the script runs before the sidebar code runs and the class never gets inserted.-->
+<script>$("li.active").parents('li').toggleClass("active");</script>
+
+  </div>
+  
+
+  <div class="ie-content-pane n-doc__component-detail-content n-doc__component-detail-content--show-code">
+    <!-- Begin of page container --><article class="page-content">
+      <div class="ie-utility">
+  <div class="ie-menu">
+    <div class="n-breadcrumb">
+      <ul class="n-breadcrumb__list">
+        <li class="n-breadcrumb__list-item">
+          <a href="https://docs.netapp.com">docs.netapp.com</a>
+        </li>
+        
+
+        
+
+        <li class="n-breadcrumb__list-item">
+          <a href="/ko-kr/nfs-plugin-vmware-vaai/">NetApp&nbsp;NFS&nbsp;Plug-in&nbsp;for&nbsp;VMware&nbsp;VAAI</a>
+        </li>
+
+      </ul>
+    </div>
+    <div style="clear: both"></div><!-- Main needs to have height -->
+  </div>
+</div>
+
+      <div class="ie-nmt-disclaimer">
+  <span>
+    <div class="ie-nmt-disclaimer-container">
+      <div class="ie-nmt-disclaimer-icon">
+        <svg class="luci-icon" aria-hidden="true">
+          <use xlink:href="/ko-kr/nfs-plugin-vmware-vaai/common/svg/sprite.svg#circle-info">
+        </svg>
+      </div>
+      <div class="ie-nmt-disclaimer-content">
+        <span> 본 한국어 번역은 사용자 편의를 위해 제공되는 기계 번역입니다. 영어 버전과 한국어 버전이 서로 어긋나는 경우에는 언제나 영어 버전이 우선합니다. </span>
+      </div>
+      <div style="clear:both;"></div>
+    </div>
+  </span>
+</div><div class="n-doc__component-detail-heading-wrap">
+  <h1 class="n-doc__component-detail-heading">VMware VAAI용 NetApp NFS 플러그인을 설치합니다</h1>
+</div>
+
+
+<p class="page-details">
+  
+    
+    <time datetime="2022-03-11 19:13:57 +0000">03/11/2022</time>
+    
+  
+
+<span>기여자
+</span>
+
+
+</p>
+
+<div class="paragraph lead">
+<p>NFS 플러그인을 설치하려면 NetApp 스토리지 시스템에서 VMware vStorage for NFS를 설정하고, VMware 호스트에서 VAAI(VMware vStorage APIs for Array Integration)가 활성화되어 있는지 확인하고, VMware ESXi 호스트에 플러그인을 다운로드하고 설치하고, 설치가 성공적으로 완료되었는지 확인해야 합니다.</p>
+</div>
+<div class="ulist">
+<div class="title">시작하기 전에</div>
+<ul>
+<li>
+<p>스토리지 시스템에서 NFSv3 또는 NFSv4.1이 활성화되어 있어야 합니다.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<img src="/us-en/nfs-plugin-vmware-vaai/images/note.svg" alt="참고">
+</td>
+<td class="content">
+NFSv4.1은 ONTAP 9.0 시스템에서만 사용할 수 있으며 NFSv3은 7-Mode 시스템과 Cluster-Mode 시스템 모두에서 사용할 수 있습니다.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>VMware vSphere 7.0U1을 사용할 수 있어야 합니다.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>NFS 설정 및 VMware vSphere 사용에 대한 자세한 내용은 에 나와 있는 설명서를 참조하십시오 <a href="#step10">10단계</a>.</p>
+</div>
+<div class="ulist">
+<div class="title">이 작업에 대해</div>
+<ul>
+<li>
+<p>VMware ESXi CLI를 사용하여 플러그인을 설치하는 경우 로 시작합니다 <a href="#step1">1단계</a>.</p>
+</li>
+<li>
+<p>VMware vSphere(VSC)용 가상 스토리지 콘솔을 사용하여 플러그인을 설치하는 경우 로 시작하십시오 <a href="#step3">3단계</a>.</p>
+<div class="paragraph">
+<p>VSC는 스토리지 컨트롤러에서 VMware vStorage for NFS를 사용하고 ESXi 호스트에서 VAAI를 활성화합니다. 이 단계는 다음과 같습니다 <a href="#step1">1</a> 부터 까지 <a href="#step2">2</a> 참조하십시오.</p>
+</div>
+</li>
+<li>
+<p>VMware vSphere용 ONTAP 툴을 사용하여 플러그인을 설치하는 경우 로 시작합니다 <a href="#step3">3단계</a>.</p>
+</li>
+<li>
+<p>사용되는 IP 주소 규칙: *</p>
+</li>
+<li>
+<p>192.168.42.2xx 형식의 IP 주소는 ESXi 서버 VMkernel 포트를 참조합니다.</p>
+</li>
+<li>
+<p>192.168.42.6x 형태의 IP 주소는 7-Mode에서 작동하는 Data ONTAP를 실행하는 시스템을 나타냅니다.</p>
+</li>
+<li>
+<p>192.168.42.8x 형태의 IP 주소는 ONTAP 시스템의 SVM(스토리지 가상 머신, 이전의 vserver)을 나타냅니다.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">단계</div>
+<ol class="arabic">
+<li>
+<p>[[1단계]] VMware vStorage for NFS 활성화:</p>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">다음을 사용하는 경우&#8230;&#8203;</th>
+<th class="tableblock halign-left valign-top">그러면&#8230;&#8203;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>ONTAP CLI를 참조하십시오</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>SVM에서 VMware vStorage for NFS 활성화: "vserver NFS modify – vserver vserver_name - vStorage enabled" &lt;vserver_name&gt;"는 SVM의 이름입니다.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>7-Mode CLI</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>스토리지 시스템에서 VMware vStorage for NFS를 사용하도록 설정하려면 'options NFS.vStorage.enable on&#8217;을 설정합니다</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>vFiler 유닛을 위한 7-Mode CLI</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>VMware NFS 데이터 저장소를 호스팅하는 MultiStore vFiler 유닛에 NetApp NFS 플러그인 vStorage for NFS를 설치할 수 있습니다. ' vFiler run vFiler_name options nfs.vStorage.enable on '</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p><a id="step2"></a> VAAI가 각 ESXi 호스트에서 활성화되어 있는지 확인합니다.</p>
+<div class="paragraph">
+<p>VMware vSphere 5.0 이상에서는 기본적으로 VAAI가 설정됩니다.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">다음을 사용하는 경우&#8230;&#8203;</th>
+<th class="tableblock halign-left valign-top">그러면&#8230;&#8203;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>VMware ESXi CLI를 참조하십시오</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>VAAI가 설정되어 있는지 확인합니다. esxcfg-advcfg-g/DataMover/HardwareAcceleratedMove ``esxcfg-advcfg-g/DataMover/HardwareAcceleratedInit’</p>
+<div class="paragraph">
+<p>VAAI가 활성화된 경우 다음 명령을 실행하면 다음 출력이 표시됩니다.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>~ #  esxcfg-advcfg -g /DataMover/HardwareAcceleratedMove
+Value of HardwareAcceleratedMove is **1**
+~ # esxcfg-advcfg -g /DataMover/HardwareAcceleratedInit
+Value of HardwareAcceleratedInit is **1**</pre>
+</div>
+</div>
+</li>
+<li>
+<p>VAAI가 설정되어 있지 않으면 VAAI를 활성화합니다. "esxcfg-advcfg-s 1/DataMover/HardwareAcceleratedInit" esxcfg-advcfg-s 1/DataMover/HardwareAcceleratedMove"</p>
+<div class="paragraph">
+<p>이러한 명령은 다음과 같은 출력을 표시합니다.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>~ # esxcfg-advcfg -s 1 /DataMover/HardwareAcceleratedInit
+Value of HardwareAcceleratedInit is **1**
+~ #  esxcfg-advcfg -s 1 /DataMover/HardwareAcceleratedMove
+Value of HardwareAcceleratedMove is **1**</pre>
+</div>
+</div>
+</li>
+</ol>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>vSphere 클라이언트</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>vCenter Server에 로그인합니다.</p>
+</li>
+<li>
+<p>각 ESXi 서버에 대해 서버 이름을 클릭합니다.</p>
+</li>
+<li>
+<p>구성 탭의 소프트웨어 섹션에서 * 고급 설정 * 을 클릭합니다.</p>
+</li>
+<li>
+<p>DataMover * 를 선택한 다음 DataMover.HardwareAcceleratedMove 및 DataMover.HardwareAcceleratedInit' 매개 변수가 1로 설정되어 있는지 확인합니다.</p>
+</li>
+</ol>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>[[3단계]] VMware VAAI용 NetApp NFS 플러그인 다운로드:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>의 다운로드 페이지로 이동합니다 <a href="https://mysupport.netapp.com/site/products/all/details/nfsplugin-vmware-vaai/downloads-tab" target="_blank" rel="noopener">"VMware VAAI 다운로드를 위한 NetApp NFS 플러그인"</a>.</p>
+</li>
+<li>
+<p>2.0 및 vSphere 7.0U1 이상 버전에 대한 최신 소프트웨어 릴리즈를 다운로드하십시오.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>다음 명령을 사용하여 ESXi 호스트에 플러그인을 설치합니다.</p>
+<div class="paragraph">
+<p>"esxcli software component apply -d/&lt;tmp&gt;/&lt; 또는&gt;/&lt;some_path\&gt;/&lt;downloaded-plugin-file-version\&gt;.zip"</p>
+</div>
+<div class="paragraph">
+<p>여기서 "&lt;some_path&gt;"는 다운로드된 파일의 위치를 나타내는 경로이고 "&lt;downloaded-plugin-file-version&gt;"은 다운로드된 파일의 이름입니다.</p>
+</div>
+</li>
+<li>
+<p>다음 명령을 실행하여 설치를 완료합니다.</p>
+<div class="paragraph">
+<p>'/etc/init.d/VAAI-NASD start&#8217;를 선택합니다</p>
+</div>
+<div class="paragraph">
+<p>'/etc/init.d/VAAI-NASD stop'</p>
+</div>
+</li>
+<li>
+<p>VMware ESXi 명령줄에서 호스트에 플러그인이 성공적으로 설치되었는지 확인합니다.</p>
+<div class="paragraph">
+<p>'esxcli 소프트웨어 구성 요소 목록'</p>
+</div>
+<div class="paragraph">
+<p>설치 후 재부팅되면 플러그인이 자동으로 작동합니다.</p>
+</div>
+<div class="paragraph">
+<p>이러한 명령을 사용하면 구성 요소가 vSphere의 새로운 VLCM 기능과 계속 호환되며, 이 기능은 7.0x 이상에서 사용할 수 있습니다.</p>
+</div>
+</li>
+<li>
+<p>새 호스트 시스템에 플러그인을 설치하거나 ONTAP를 실행하는 서버가 새로 구성된 경우 에서 VAAI를 사용하는 ESXi 서버의 루트 볼륨 및 각 NFS 데이터 저장소 볼륨에 대한 엑스포트 정책 규칙을 생성하거나 수정합니다 <a href="task-configure-export-policies-for-clustered-data-ontap-to-allow-vaai-over-nfs.html">"NFS를 통한 VAAI를 허용하도록 ONTAP에 대한 엑스포트 정책을 구성합니다"</a>.</p>
+<div class="paragraph">
+<p>7-Mode에서 작동하는 Data ONTAP를 사용하는 경우 이 단계를 건너뛰십시오.</p>
+</div>
+<div class="paragraph">
+<p>내보내기 정책을 사용하여 특정 클라이언트에 대한 볼륨 액세스를 제한할 수 있습니다. VAAI 복사본 오프로드가 작동하려면 엑스포트 정책에서 NFSv4가 필요하므로 SVM의 데이터 저장소 볼륨에 대한 엑스포트 정책 규칙을 수정해야 할 수 있습니다. 데이터 저장소에서 NFS 이외의 프로토콜을 사용하는 경우 내보내기 규칙에서 NFS 설정을 사용해도 다른 프로토콜은 제거되지 않는지 확인합니다.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">사용하는 경우&#8230;&#8203;</th>
+<th class="tableblock halign-left valign-top">그러면&#8230;&#8203;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>ONTAP CLI를 참조하십시오</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>VAAI를 사용하는 ESXi 서버에 대한 각 내보내기 정책 규칙에 대해 "NFS"를 액세스 프로토콜로 설정합니다. "vserver export-policy rule modify -vserver vs1 -policyname mypolicy-ruleindex 1 -protocol nfs-rwrule krb5</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">krb5i</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">any-rorule krb5</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">krb5i</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">any"</p>
+<p class="tableblock">다음 예제에서:</p>
+<p class="tableblock"><strong> VS1은 SVM의 이름입니다.
+</strong> 매몰리시(mypolicy)는 수출정책의 이름입니다.
+<strong> 1은 규칙의 인덱스 번호입니다.
+</strong> NFS에는 NFSv3 및 NFSv4 프로토콜이 포함되어 있습니다.
+** RO(읽기 전용) 및 RW(읽기-쓰기)의 보안 스타일은 krb5, krb5i 또는 any입니다.
++
+[listing]
+----
+cluster1::&gt; vserver export-policy rule modify -vserver vs1
+-policyname mypolicy -ruleindex 1 -protocol nfs -rwrule krb5</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">krb5i</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">any -rorule krb5</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">krb5i</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">any
+----</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>ONTAP 시스템 관리자</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>홈 탭에서 해당 클러스터를 두 번 클릭합니다.</p>
+</li>
+<li>
+<p>왼쪽 탐색 창에서 SVM(스토리지 가상 머신) 계층을 확장합니다.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<img src="/us-en/nfs-plugin-vmware-vaai/images/note.svg" alt="참고">
+</td>
+<td class="content">
+3.1 이전 버전의 System Manager를 사용하는 경우 계층에서 스토리지 가상 머신 대신 vserver라는 용어가 사용됩니다.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>탐색 창에서 VAAI 지원 데이터 저장소가 있는 SVM(스토리지 가상 머신)을 선택한 다음 * Policies * &gt; * Export Policies * 를 클릭합니다.</p>
+</li>
+<li>
+<p>엑스포트 정책 창에서 엑스포트 정책을 확장한 다음 규칙 인덱스를 선택합니다.</p>
+<div class="paragraph">
+<p>사용자 인터페이스에서 데이터 저장소가 VAAI로 설정되어 있다고 지정하지 않습니다.</p>
+</div>
+</li>
+<li>
+<p>규칙 수정 * 을 클릭하여 내보내기 규칙 수정 대화 상자를 표시합니다.</p>
+</li>
+<li>
+<p>액세스 프로토콜 * 에서 * nfs * 를 선택하여 모든 버전의 NFS를 활성화합니다.</p>
+</li>
+<li>
+<p>확인 * 을 클릭합니다.</p>
+</li>
+</ol>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>7-Mode에서 작동하는 Data ONTAP를 사용하는 경우 볼륨 경로 내보내기에 대한 "exportfs" 명령을 실행합니다.</p>
+<div class="paragraph">
+<p>ONTAP를 사용하는 경우 이 단계를 건너뛰십시오.</p>
+</div>
+<div class="paragraph">
+<p>exportfs 명령에 대한 자세한 내용은 를 참조하십시오 <a href="https://library.netapp.com/ecm/ecm_download_file/ECMP1401220" target="_blank" rel="noopener">"7-Mode용 Data ONTAP 8.2 파일 액세스 및 프로토콜 관리 가이드 를 참조하십시오"</a>.</p>
+</div>
+<div class="paragraph">
+<p>볼륨을 내보낼 때 호스트 이름 또는 IP 주소, 서브넷 또는 넷그룹을 지정할 수 있습니다. RW와 root 옵션 모두에 대해 IP 주소, 서브넷, 호스트를 지정할 수 있습니다. 예를 들면 다음과 같습니다.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>sys1&gt; exportfs -p root=192.168.42.227 /vol/VAAI</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>또한 콜론으로 구분된 목록이 있을 수도 있습니다. 예를 들면 다음과 같습니다.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>sys1&gt; exportfs -p root=192.168.42.227:192.168.42.228 /vol/VAAI</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>실제 플래그를 사용하여 볼륨을 내보내는 경우 내보내기 경로에 복사 오프로드가 제대로 작동하려면 단일 구성 요소가 있어야 합니다. 예를 들면 다음과 같습니다.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>sys1&gt; exportfs -p actual=/vol/VAAI,root=192.168.42.227 /VAAI-ALIAS</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<img src="/us-en/nfs-plugin-vmware-vaai/images/note.svg" alt="참고">
+</td>
+<td class="content">
+Copy Offload는 여러 구성 요소 내보내기 경로에 사용할 수 없습니다.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>ESXi 호스트에 NFSv3 또는 NFSv4.1 데이터 저장소를 마운트합니다.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>NFSv3 데이터 저장소를 마운트하려면 다음 명령을 실행합니다.</p>
+<div class="paragraph">
+<p>'esxcli storage nfs add -H 192.168.42.80 -s share_name -v volume_name'</p>
+</div>
+<div class="paragraph">
+<p>NFSv4.1 데이터 저장소를 마운트하려면 다음 명령을 실행합니다.</p>
+</div>
+<div class="paragraph">
+<p>"esxcli storage nfs41 add -H 192.168.42.80 -s share_name -v volume_name -a AUTH_SYS/SEC_krb5/SEC_KRB5I"</p>
+</div>
+<div class="paragraph">
+<p>다음 예에서는 데이터 저장소를 마운트하고 결과 출력을 위해 ONTAP에서 실행할 명령을 보여 줍니다.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>~ # esxcfg-nas -a onc_src -o 192.168.42.80 -s /onc_src
+Connecting to NAS volume: onc_src
+/onc_src created and connected.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>7-Mode에서 작동하는 Data ONTAP를 실행하는 시스템의 경우 '/vol' 접두사가 NFS 볼륨 이름 앞에 옵니다. 다음 예에서는 데이터 저장소를 마운트하는 7-Mode 명령 및 결과 출력을 보여 줍니다.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>~ # esxcfg-nas -a vms_7m -o 192.168.42.69 -s /vol/vms_7m
+Connecting to NAS volume: /vol/vms_7m
+/vol/vms_7m created and connected.</pre>
+</div>
+</div>
+</li>
+<li>
+<p>NAS 마운트를 관리하려면:</p>
+<div class="paragraph">
+<p>'esxcfg-nas-l&#8217;입니다</p>
+</div>
+<div class="paragraph">
+<p>다음 출력이 표시됩니다.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>VMS_vol103 is /VMS_vol103 from 192.168.42.81 mounted available
+VMS_vol104 is VMS_vol104 from 192.168.42.82 mounted available
+dbench1 is /dbench1 from 192.168.42.83 mounted available
+dbench2 is /dbench2 from 192.168.42.84 mounted available
+onc_src is /onc_src from 192.168.42.80 mounted available</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>완료되면 볼륨이 마운트되고 /VMFS/volumes 디렉토리에서 사용할 수 있습니다.</p>
+</div>
+</li>
+<li>
+<p><a id="step10"></a> 다음 방법 중 하나를 사용하여 마운트된 데이터 저장소가 VAAI를 지원하는지 확인합니다.</p>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">사용하는 경우&#8230;&#8203;</th>
+<th class="tableblock halign-left valign-top">그러면&#8230;&#8203;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>ESXi CLI</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>' vmkfstools - pH/VMFS/volumes/onc_src/' 다음 출력이 표시됩니다.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>NFS-1.00 file system spanning 1 partitions.
+File system label (if any):
+onc_src Mode: public Capacity 760 MB, 36.0 MB available,
+file block size 4 KB
+UUID: fb9cccc8-320a99a6-0000-000000000000
+Partitions spanned (on "notDCS"):
+
+nfs:onc_src
+NAS VAAI Supported: YES
+Is Native Snapshot Capable: YES
+~ #</pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>vSphere 클라이언트</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>ESXi 서버 * &gt; * 구성 * &gt; * 스토리지 * 를 클릭합니다.</p>
+</li>
+<li>
+<p>VAAI가 설정된 NFS 데이터 저장소의 Hardware Acceleration 열을 봅니다.</p>
+</li>
+</ol>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>VMware vStorage over NFS에 대한 자세한 내용은 다음을 참조하십시오.</p>
+</div>
+<div class="paragraph">
+<p><a href="http://docs.netapp.com/ontap-9/topic/com.netapp.doc.cdot-famg-nfs/home.html" target="_blank" rel="noopener">"ONTAP 9 NFS 참조 개요"</a></p>
+</div>
+<div class="paragraph">
+<p><a href="https://library.netapp.com/ecm/ecm_download_file/ECMP1401220" target="_blank" rel="noopener">"7-Mode용 Data ONTAP 8.2 파일 액세스 및 프로토콜 관리 가이드 를 참조하십시오"</a></p>
+</div>
+<div class="paragraph">
+<p>볼륨에서 볼륨 및 공간을 구성하는 방법에 대한 자세한 내용은 다음을 참조하십시오.</p>
+</div>
+<div class="paragraph">
+<p><a href="http://docs.netapp.com/ontap-9/topic/com.netapp.doc.dot-cm-vsmg/home.html" target="_blank" rel="noopener">"CLI를 통한 논리적 스토리지 관리 개요"</a></p>
+</div>
+<div class="paragraph">
+<p><a href="https://library.netapp.com/ecm/ecm_download_file/ECMP1368859" target="_blank" rel="noopener">"7-Mode용 Data ONTAP 8.2 스토리지 관리 가이드 를 참조하십시오"</a></p>
+</div>
+<div class="paragraph">
+<p>vCenter 웹 클라이언트 GUI를 사용하여 여러 호스트에 플러그인을 설치 및 관리하는 데 사용할 수 있는 VMware vSphere Lifecycle Manager에 대한 자세한 내용은 다음을 참조하십시오.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere-lifecycle-manager.doc/GUID-74295A37-E8BB-4EB9-BFBA-47B78F0C570D.html" target="_blank" rel="noopener">"VMware vSphere Lifecycle Manager 정보"</a></p>
+</div>
+<div class="paragraph">
+<p>VMware 환경에서 VSC를 사용하여 NFS 데이터 저장소를 프로비저닝하고 가상 머신의 클론을 생성하는 방법에 대한 자세한 내용은 다음을 참조하십시오.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://library.netapp.com/ecmdocs/ECMLP2561116/html/index.html" target="_blank" rel="noopener">"Virtual Storage Console 6.2.1 for VMware vSphere 설치 및 관리 가이드 를 참조하십시오"</a></p>
+</div>
+<div class="paragraph">
+<p>VMware vSphere용 ONTAP 툴을 사용하여 NFS 데이터 저장소를 프로비저닝하고 VMware 환경에서 가상 머신의 클론을 생성하는 방법에 대한 자세한 내용은 다음을 참조하십시오.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://docs.netapp.com/vapp-98/topic/com.netapp.doc.vsc-dsg/home.html" target="_blank" rel="noopener">"VMware vSphere용 ONTAP 툴 설명서"</a></p>
+</div>
+<div class="paragraph">
+<p>NFS 데이터 저장소 작업 및 클론 생성 작업 수행에 대한 자세한 내용은 다음을 참조하십시오.</p>
+</div>
+<div class="paragraph">
+<p><a href="http://pubs.vmware.com/vsphere-60/topic/com.vmware.ICbase/PDF/vsphere-esxi-vcenter-server-60-storage-guide.pdf" target="_blank" rel="noopener">"VMware vSphere 스토리지"</a></p>
+</div>
+</li>
+<li>
+<p>7-Mode에서 작동하는 Data ONTAP를 사용하는 경우 'is on' 명령을 실행하여 데이터 저장소 볼륨을 복제 오프로딩 및 중복 제거를 위해 설정합니다.</p>
+<div class="paragraph">
+<p>ONTAP의 경우 볼륨에 대한 효율성 세부 정보를 봅니다.</p>
+</div>
+<div class="paragraph">
+<p>'볼륨 효율성 표시 - vserver vserver_name - volume volume volume_name'</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<img src="/us-en/nfs-plugin-vmware-vaai/images/note.svg" alt="참고">
+</td>
+<td class="content">
+AFF(AFF) 시스템의 경우 볼륨 효율성이 기본적으로 활성화됩니다.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>명령 출력에 스토리지 효율성이 설정된 볼륨이 표시되지 않으면 효율성이 설정된 것입니다.</p>
+</div>
+<div class="paragraph">
+<p>'vserver vserver_name - volume volume volume_name&#8217;의 볼륨 효율성</p>
+</div>
+<div class="paragraph">
+<p>볼륨 효율성이 데이터 저장소에 기본적으로 설정되어 있으므로 VMware vSphere용 VSC 또는 ONTAP 툴을 사용하여 볼륨을 설정하는 경우 이 단계를 건너뛰십시오.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>sys1&gt; volume efficiency show
+This table is currently empty.
+
+sys1&gt; volume efficiency on -volume  testvol1
+Efficiency for volume "testvol1" of Vserver "vs1" is enabled.
+
+sys1&gt; volume efficiency show
+Vserver    Volume           State    Status       Progress           Policy
+---------- ---------------- -------- ------------ ------------------ ----------
+vs1        testvol1         Enabled  Idle         Idle for 00:00:06  -</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>데이터 저장소 볼륨에서 중복 제거를 설정하는 방법에 대한 자세한 내용은 다음을 참조하십시오.</p>
+</div>
+<div class="paragraph">
+<p><a href="http://docs.netapp.com/ontap-9/topic/com.netapp.doc.dot-cm-vsmg/home.html" target="_blank" rel="noopener">"CLI를 통한 논리적 스토리지 관리 개요"</a></p>
+</div>
+<div class="paragraph">
+<p><a href="https://library.netapp.com/ecm/ecm_download_file/ECMP1401220" target="_blank" rel="noopener">"7-Mode용 Data ONTAP 8.2 파일 액세스 및 프로토콜 관리 가이드 를 참조하십시오"</a></p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>NFS 플러그인 공간 예약 및 복사 오프로드 기능을 사용하여 일상적인 작업을 더 효율적으로 수행할 수 있습니다.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>NetApp 기존 볼륨 또는 FlexVol 볼륨에서 일반 가상 머신 디스크(VMDK) 형식으로 가상 머신을 생성하고, 가상 머신을 생성할 때 해당 파일에 대한 공간을 예약합니다.</p>
+</li>
+<li>
+<p>NetApp 볼륨 내 또는 여러 NetApp 볼륨 간에 기존 가상 머신 클론 복제:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>같은 노드의 동일한 SVM에 있는 볼륨의 데이터 저장소</p>
+</li>
+<li>
+<p>서로 다른 노드의 동일한 SVM에 있는 볼륨의 데이터 저장소</p>
+</li>
+<li>
+<p>동일한 7-Mode 시스템 또는 vFiler 유닛의 볼륨인 데이터 저장소</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>ESXi 호스트를 통과할 필요가 없으므로 VAAI가 아닌 클론 작업보다 더 빠른 클론 생성 작업을 수행합니다.</p>
+</li>
+</ul>
+</div>
+
+    </article>
+    <!-- Page Container -->
+  </div>
+
+  <div style="clear: both"></div><!-- Main needs to have height --></div>
+
+        </main>
+
+        <footer class="n-footer">
+  <div class="n-footer__bottom">
+    <div class="n-container">
+      <div class="n-footer__bottom-left">
+
+        <div class="n-footer__copyright">
+          <ul class="n-footer__copyright-list">
+            <li class="n-footer__copyright-link">
+            <a href="https://www.netapp.com/us/legal/copyright.aspx">© 2022 NetApp, Inc.</a>
+            </li>
+
+</ul>
+</div>
+<div class="n-footer__social-links">
+<ul class="n-footer__social-link-list">
+<li class="n-footer__social-link-list-item">
+<a class="n-footer__social-link" data-ntap-social="follow-blog" href="https://blog.netapp.com" target="_blank" title="blog" alt="blog">
+<span class="n-footer__social-link-text">blog</span>
+<svg class="n-icon-blog n-footer__social-link-icon" aria-labelledby="title">
+  <title>blog@</title>
+  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/ko-kr/nfs-plugin-vmware-vaai/common/svg/sprite.svg#blog"></use>
+</svg>
+
+</a>
+</li>
+<li class="n-footer__social-link-list-item">
+<a class="n-footer__social-link" data-ntap-social="follow-community" href="https://community.netapp.com/" target="_blank" title="community" alt="community">
+<span class="n-footer__social-link-text">community</span>
+<svg class="n-icon-community n-footer__social-link-icon" aria-labelledby="title">
+<title>community@</title>
+<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/ko-kr/nfs-plugin-vmware-vaai/common/svg/sprite.svg#comments"></use>
+</svg>
+
+</a>
+</li>
+<li class="n-footer__social-link-list-item">
+<a class="n-footer__social-link" data-ntap-social="follow-twitter" href="https://twitter.com/netapp" target="_blank" title="twitter" alt="twitter">
+<span class="n-footer__social-link-text">twitter</span>
+<svg class="n-icon-twitter n-footer__social-link-icon" aria-labelledby="title">
+<title>twitter@</title>
+<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/ko-kr/nfs-plugin-vmware-vaai/common/svg/sprite.svg#twitter"></use>
+</svg>
+
+</a>
+</li>
+<li class="n-footer__social-link-list-item">
+<a class="n-footer__social-link" data-ntap-social="follow-facebook" href="https://www.facebook.com/NetApp" target="_blank" title="facebook" alt="facebook">
+<span class="n-footer__social-link-text">facebook</span>
+<svg class="n-icon-facebook n-footer__social-link-icon" aria-labelledby="title">
+<title>facebook@</title>
+<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/ko-kr/nfs-plugin-vmware-vaai/common/svg/sprite.svg#facebook"></use>
+</svg>
+
+</a>
+</li>
+<li class="n-footer__social-link-list-item">
+<a class="n-footer__social-link" data-ntap-social="follow-linkedin" href="https://www.linkedin.com/company/netapp" target="_blank" title="linkedin" alt="linkedin">
+<span class="n-footer__social-link-text">linkedin</span>
+<svg class="n-icon-linkedin n-footer__social-link-icon" aria-labelledby="title">
+<title>linkedin@</title>
+<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/ko-kr/nfs-plugin-vmware-vaai/common/svg/sprite.svg#linkedin"></use>
+</svg>
+
+</a>
+</li>
+<li class="n-footer__social-link-list-item">
+<a class="n-footer__social-link" data-ntap-social="follow-youtube" href="https://www.youtube.com/user/NetAppTV" target="_blank" title="youtube" alt="youtube">
+<span class="n-footer__social-link-text">youtube</span>
+<svg class="n-icon-youtube n-footer__social-link-icon" aria-labelledby="title">
+<title>youtube@</title>
+<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/ko-kr/nfs-plugin-vmware-vaai/common/svg/sprite.svg#youtube"></use>
+</svg>
+
+</a>
+</li>
+<li class="n-footer__social-link-list-item">
+<a class="n-footer__social-link" data-ntap-social="follow-slideshare" href="https://www.slideshare.net/NetApp" target="_blank" title="slideshare" alt="slideshare">
+<span class="n-footer__social-link-text">slideshare</span>
+<svg class="n-icon-slideshare n-footer__social-link-icon" aria-labelledby="title">
+<title>slideshare@</title>
+<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/ko-kr/nfs-plugin-vmware-vaai/common/svg/sprite.svg#slideshare"></use>
+</svg>
+
+</a>
+</li>
+</ul>
+</div>
+
+</div>
+<div class="n-footer__bottom-right">
+  <p class="n-footer__fine-print">웹 사이트에 대한 피드백이 있으십니까?<a target="_self" href="javascript:netapp_mailto()" class="n-footer__copyright">의견을 공유해 주십시오</a>
+  <a href="https://docs.netapp.com/ko-kr/announcements/" class="n-footer__copyright">공지 사항</a>
+  </p>
+</div>
+</div>
+</div>
+</footer>
+
+      </div><!-- Elasticsearch JS -->
+      <script type="text/javascript" src='/ko-kr/nfs-plugin-vmware-vaai/js/bundle.js'></script>
+
+      <!-- Syntax Highlighting -->
+      <script type="text/javascript" src='/ko-kr/nfs-plugin-vmware-vaai/js/prism.js'></script>
+      <script type="text/javascript" src='/ko-kr/nfs-plugin-vmware-vaai/js/prism-curl.js'></script>
+    </div>
+    <script>
+      document.body.offsetWidth=1903;
+      cookieLaw = {}
+      cookieLaw.euCountry = "US";
+      cookieLaw.invoke = function(){return false;}
+    </script>
+    <script src='/ko-kr/nfs-plugin-vmware-vaai/js/www-ntap.js'></script>
+    <script src='/ko-kr/nfs-plugin-vmware-vaai/js/tabbed-blocks.js'></script>
+  </body></html>
