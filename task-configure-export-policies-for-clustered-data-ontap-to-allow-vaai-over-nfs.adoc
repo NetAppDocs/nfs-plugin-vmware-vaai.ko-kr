@@ -1,0 +1,182 @@
+---
+permalink: task-configure-export-policies-for-clustered-data-ontap-to-allow-vaai-over-nfs.html 
+sidebar: sidebar 
+keywords: configure, export, policies, policy, compliance, vmware, vstorage, api, array, integration, vaai, storage, feature, nfs, server, ontap, svm, vserver, vstorage 
+summary: 'NFS 서버와 NetApp 스토리지를 통해 VAAI(VMware vStorage APIs for Array Integration) 스토리지 기능 간의 규정 준수를 제공하려면 엑스포트 정책을 구성해야 합니다. ONTAP에서 볼륨 내보내기는 스토리지 가상 시스템(SVM, 이전의 SVM)에 적용되는 엑스포트 정책으로 제한됩니다.' 
+---
+= NFS를 통한 VAAI를 허용하도록 ONTAP에 대한 엑스포트 정책을 구성합니다
+:icons: font
+:imagesdir: ./media/
+
+
+[role="lead"]
+NFS 서버와 NetApp 스토리지를 통해 VAAI(VMware vStorage APIs for Array Integration) 스토리지 기능 간의 규정 준수를 제공하려면 엑스포트 정책을 구성해야 합니다. ONTAP에서 볼륨 내보내기는 스토리지 가상 시스템(SVM, 이전의 SVM)에 적용되는 엑스포트 정책으로 제한됩니다.
+
+.시작하기 전에
+* NFSv4 호출은 관련 NFS 볼륨에서 허용되어야 합니다.
+* 루트 사용자는 기본 사용자로 유지되어야 합니다.
+* NFSv4는 상호 연결된 모든 상위 볼륨에서 허용되어야 합니다.
+* VAAI 지원 옵션은 관련 NFS 서버에서 설정해야 합니다.
+
+
+여러 조건 및 프로토콜에 대해 서로 다른 내보내기 정책을 구성할 수 있습니다.
+
+.단계
+. 엑스포트 정책이 생성되지 않은 경우 SVM 이름, 정책 이름, 기본 규칙 인덱스, 프로토콜 등이 포함된 VMware ESXi 호스트의 루트 볼륨에 SVM을 위한 엑스포트 정책을 생성합니다.
++
+'vserver export-policy rule modify -vserver vserver name -policyname default-ruleindex rule index -protocol NFSv3\ | NFSv4'
+
+. 다음 조건에서 NFSv3 및 NFSv4 프로토콜을 모두 허용하도록 엑스포트 정책을 수정합니다.
++
+** 해당 ESX Server 및 볼륨에 대한 내보내기 정책 규칙을 모든 관련 액세스 권한으로 구성해야 합니다.
+** 클라이언트의 일치에 대해 RW, RO, 슈퍼유저 값을 'SYS' 또는 'any'로 설정해야 합니다.
+** NFSv3 및 NFSv4 프로토콜을 허용해야 합니다.
++
+내보내기 정책의 액세스 프로토콜은 다음과 같이 설정됩니다.
+
++
+*** Access Protocol = "NFS"(모든 버전의 NFS 포함)
+*** 액세스 프로토콜 = 'NFSv3', 'NFSv4'(NFSv3 데이터 저장소 액세스용 NFSv3), NFSv4(NFSv4.1 데이터 저장소 액세스용 NFSv4)
++
+다음 명령은 SVM 세부 정보를 표시하고 엑스포트 정책을 설정합니다.
+
++
+[listing]
+----
+cm3240c-rtp::> vol show -vserver vmware -volume vmware_VAAI -fields policy (volume
+show)
+vserver volume       policy         junction-path
+------- ------       -------        -------------
+vmware  vmware_VAAI  vmware_access  /VAAI
+----
+
+
++
+[listing]
+----
+cm3240c-rtp::> export-policy rule show -vserver vmware -policyname vmware_access-ruleindex 2(vserver export-policy rule show)
+
+Vserver: vmware
+Policy Name: vmware_access
+Rule Index: 1
+Access Protocol: nfs3,nfs4 (can also be nfs for NFSv3)
+Client Match Spec: 192.168.1.6
+RO Access Rule: sys
+RW Access Rule: sys
+User ID To Which Anonymous Users Are Mapped: 65534
+Superuser Security Flavors: sys
+Honor SetUID Bits In SETATTR: true
+Allow Creation of Devices: true
+----
+
+
++
+정책 변경 사항은 관련 정책을 사용하는 모든 볼륨에 적용되며 NFS 데이터 저장소 볼륨에만 적용되는 것은 아닙니다.
+
+. 다음 조건을 사용하여 슈퍼사용자를 SYS로 설정하도록 내보내기 정책을 수정합니다.
++
+** 루트 볼륨에 대한 읽기 액세스 권한, NFSv4 액세스 및 접합 볼륨에 대한 VAAI 액세스를 사용하여 연결 경로의 모든 상위 볼륨을 구성해야 합니다.
++
+SVM을 위한 루트 볼륨의 상위 사용자는 관련 클라이언트에 대해 SYS로 설정됩니다.
+
+** SVM 루트 볼륨에 대한 쓰기 액세스 권한을 거부해야 합니다. 다음 명령은 SVM 세부 정보를 표시하고 엑스포트 정책을 설정합니다.
++
+[listing]
+----
+cm3240c-rtp::> vol show -vserver vmware -volume vmware_root -fields policy,
+junction-path (volume show)
+vserver volume policy  junction-path
+------- ------ ------- -------------
+vmware  vmware_root  root_policy /
+----
++
+[listing]
+----
+
+cm3240c-rtp::> export-policy rule show -vserver vmware -policyname root_policy
+-ruleindex 1 (vserver export-policy rule show)
+
+Vserver: vmware
+Policy Name: root_policy
+Rule Index: 1
+Access Protocol: nfs  <--- as in scenario 1, set to nfs or nfs3,nfs4
+Client Match Spec: 192.168.1.5
+RO Access Rule: sys
+RW Access Rule: never  <--- this can be never for security reasons
+User ID To Which Anonymous Users Are Mapped: 65534
+Superuser Security Flavors: sys   <--- this is required for VAAI to be set, even
+in the parent volumes like vsroot
+Honor SetUID Bits In SETATTR: true
+Allow Creation of Devices: true
+----
++
+슈퍼유저가 SYS로 설정되어 루트 사용자가 유지됩니다. 따라서 루트 사용자는 연결 경로/VAAI가 있는 볼륨에 액세스할 수 있습니다.
+
++
+루트 볼륨과 VMware_VAAI 볼륨 사이의 연결 지점에 추가 볼륨이 있는 경우 해당 볼륨에 해당 클라이언트에 대한 정책 규칙이 있어야 합니다. 여기서 슈퍼사용자는 SYS 또는 Any로 설정됩니다.
+
++
+대부분의 경우 루트 볼륨은 정책 이름이 기본값으로 설정된 정책을 사용합니다.
+
++
+모든 정책 변경은 관련 정책을 사용하는 모든 볼륨에 적용되며 루트 볼륨에만 적용되는 것은 아닙니다.
+
+
+
+. vStorage 기능 'NFS modify -vserver vserver_name vmware -vStorage enabled'를 활성화합니다
++
+SVM에서 NFS 서비스를 사용하려면 vStorage 기능을 사용하도록 설정 해야 합니다.
+
+. vStorage 기능이 활성화되어 있는지 확인합니다.
++
+'NFS show-fields vStorage'
+
++
+출력에 "ENABLED"가 표시되어야 합니다.
+
++
+[listing]
+----
+cm3240c-rtp::> nfs show -fields vstorage
+vserver vstorage
+------- --------
+vmware  enabled
+----
+. 엑스포트 정책 생성:
++
+'vserver export-policy rule create'
+
++
+다음 명령을 실행하면 엑스포트 정책 규칙이 생성됩니다.
+
++
+[listing]
+----
+User1-vserver2::> protocol export-policy rule create -vserver vs1
+-policyname default -clientmatch 0.0.0.0/0 -rorule any -rwrule any -superuser
+any -anon 0
+
+User1-vserver2::> export-policy rule show vserver export-policy rule show)
+Virtual      Policy          Rule    Access   Client                RO
+Server       Name            Index   Protocol Match                 Rule
+------------ --------------- ------  -------- --------------------- ---------
+vs1          default         1       any      0.0.0.0/0             any
+
+User1-vserver2::>
+----
+. 엑스포트 정책을 표시합니다.
++
+vserver export-policy show를 참조하십시오
+
++
+다음 명령은 엑스포트 정책을 표시합니다.
+
++
+[listing]
+----
+User1-vserver2::> export-policy show (vserver export-policy show)
+Virtual Server   Policy Name
+---------------  -------------------
+vs1              default
+----
+
