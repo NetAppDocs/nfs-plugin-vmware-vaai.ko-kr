@@ -5,6 +5,7 @@ keywords: install, netapp, nfs, plug-in, vmware, vaai, involve, enable, netapp, 
 summary: 'NFS 플러그인을 설치하려면 NetApp 스토리지 시스템에서 VMware vStorage for NFS를 설정하고, VMware 호스트에서 VAAI(VMware vStorage APIs for Array Integration)가 활성화되어 있는지 확인하고, VMware ESXi 호스트에 플러그인을 다운로드하고 설치하고, 설치가 성공적으로 완료되었는지 확인해야 합니다.' 
 ---
 = VMware VAAI용 NetApp NFS 플러그인을 설치합니다
+:allow-uri-read: 
 :icons: font
 :imagesdir: ./media/
 

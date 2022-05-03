@@ -5,6 +5,7 @@ keywords: configure, export, policies, policy, compliance, vmware, vstorage, api
 summary: 'NFS 서버와 NetApp 스토리지를 통해 VAAI(VMware vStorage APIs for Array Integration) 스토리지 기능 간의 규정 준수를 제공하려면 엑스포트 정책을 구성해야 합니다. ONTAP에서 볼륨 내보내기는 스토리지 가상 시스템(SVM, 이전의 SVM)에 적용되는 엑스포트 정책으로 제한됩니다.' 
 ---
 = NFS를 통한 VAAI를 허용하도록 ONTAP에 대한 엑스포트 정책을 구성합니다
+:allow-uri-read: 
 :icons: font
 :imagesdir: ./media/
 
