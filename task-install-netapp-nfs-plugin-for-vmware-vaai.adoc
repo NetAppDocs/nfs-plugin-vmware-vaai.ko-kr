@@ -125,19 +125,58 @@ vSphere 클라이언트
 .. 2.0 및 vSphere 7.0U1 이상 버전에 대한 최신 소프트웨어 릴리즈를 다운로드하십시오.
 
 
-. 다음 명령을 사용하여 ESXi 호스트에 플러그인을 설치합니다.
+. 서명된 이미지와 공개 키를 사용하여 바이너리를 확인합니다.
 +
-"esxcli software component apply -d/<tmp>/< 또는>/<some_path\>/<downloaded-plugin-file-version\>.zip"
+.. 다음 zip 파일을 에 다운로드합니다 `/tmp` 폴더:
++
+`NetAppNasPlugin-<version>.Signed.zip`
 
 +
-여기서 "<some_path>"는 다운로드된 파일의 위치를 나타내는 경로이고 "<downloaded-plugin-file-version>"은 다운로드된 파일의 이름입니다.
+이 zip 파일에는 다음 파일이 포함되어 있습니다.
 
-. 다음 명령을 실행하여 설치를 완료합니다.
++
+*** `NetAppNasPlugin-<version>.zip`
+*** `NetAppNasPlugin-<version>.zip.sig`
+*** `csc-prod-CFSG-NFS-Plugin.pem`
+
+
+.. 다음 명령을 사용하여 인증서 체인에서 공개 키를 가져옵니다.
++
+`openssl x509 -in csc-prod-CFSG-NFS-Plugin.pem -pubkey -noout > csc-prod-CFSG-NFS-Plugin.pub`
+
++
+*** `csc-prod-CFSG-NFS-Plugin.pem` 에 인증서 체인이 있습니다 `NetAppNasPlugin-<version>.Signed.zip`
+*** `csc-prod-CFSG-NFS-Plugin.pub` 공개 키입니다
+
+
+.. 공개 키로 서명된 이미지를 확인합니다.
++
+`openssl dgst -sha256 -verify csc-prod-CFSG-NFS-Plugin.pub -signature /tmp/ NetAppNasPlugin-<version>.zip.sig  /tmp/NetAppNasPlugin-<version>.zip`
+
++
+확인이 성공하면 다음 출력이 표시됩니다.
+
++
+[listing]
+----
+Verified OK
+----
+
+
+. 다음 명령을 실행하여 ESXi 호스트에 플러그인을 설치합니다.
++
+'/etc/init.d/VAAI-NASD stop'
+
++
+`esxcli software component apply -d   /tmp/<some_path>/NetAppNasPlugin-<version>.zip`
+
 +
 '/etc/init.d/VAAI-NASD start'를 선택합니다
 
 +
-'/etc/init.d/VAAI-NASD stop'
+** `<some_path>` 다운로드한 파일의 위치에 대한 경로입니다
+** `NetAppNasPlugin-<version>.zip` 다운로드한 zip 파일에 들어 있습니다
+
 
 . VMware ESXi 명령줄에서 호스트에 플러그인이 성공적으로 설치되었는지 확인합니다.
 +
